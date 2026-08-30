@@ -104,7 +104,7 @@ pub fn run() {
                             ..
                         }
                     ) {
-                        show_main(&tray.app_handle());
+                        show_main(tray.app_handle());
                     }
                 })
                 .build(app)?;
