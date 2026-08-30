@@ -1017,12 +1017,14 @@ version = "0.1.0"
 dependencies = [
  "atspi",
  "chrono",
+ "futures-lite",
  "regex",
  "serde",
  "tauri",
  "tauri-build",
  "tempfile",
  "uiautomation",
+ "windows 0.62.2",
 ]
 
 [[package]]

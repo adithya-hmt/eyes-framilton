@@ -3,6 +3,7 @@ use regex::Regex;
 use std::sync::OnceLock;
 
 const EXCLUDED_APPS: &[&str] = &[
+    "eyes",
     "1password",
     "bitwarden",
     "dashlane",
@@ -91,6 +92,11 @@ mod tests {
         .is_none());
         assert!(redact_snapshot(Snapshot {
             app: "Bitwarden".into(),
+            ..Snapshot::default()
+        })
+        .is_none());
+        assert!(redact_snapshot(Snapshot {
+            app: "Eyes".into(),
             ..Snapshot::default()
         })
         .is_none());

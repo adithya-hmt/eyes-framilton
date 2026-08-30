@@ -13,13 +13,15 @@ product idea and rebuilds the shell, privacy pipeline, and site around Eyes.
 
 - Vite/React landing page for `eyes.framilton.com`
 - Tauri 2 desktop shell with a tray menu
-- Shared redaction and Markdown writer with Rust tests
-- Explicit reader seams for Linux AT-SPI2 and Windows UI Automation
+- Linux AT-SPI2 focused-window reader
+- Windows UI Automation focused-window reader
+- Shared redaction, repeat suppression, and Markdown writer with Rust tests
 
-The native readers are the only unfinished part of the product. Linux needs a
-long-lived AT-SPI2 D-Bus connection and focused-tree traversal. Windows needs a
-COM UI Automation thread using `GetFocusedElement`. Details and acceptance
-checks live in [`docs/PLATFORM.md`](docs/PLATFORM.md).
+Recording starts from the tray menu's `Toggle recording` action. The capture
+loop polls every five seconds and writes to the Tauri app-data directory under
+`daily/`. The readers fail closed when the accessibility service is missing or
+a control reports protected content. Manual platform acceptance checks live in
+[`docs/PLATFORM.md`](docs/PLATFORM.md).
 
 ## Run the site
 

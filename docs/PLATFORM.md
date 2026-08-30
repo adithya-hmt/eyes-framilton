@@ -5,9 +5,10 @@ focused-window reader varies by desktop.
 
 ## Linux
 
-Use the `atspi` crate to connect to the AT-SPI2 D-Bus and obtain the focused
-application. Keep the connection alive for the capture thread. Walk only the
-focused application's accessible subtree and collect text-bearing nodes.
+The implemented reader uses the `atspi` crate to keep one AT-SPI2 D-Bus
+connection for the capture thread. It locates the active frame, walks only
+that frame's accessible subtree, caps nodes/text, and skips `PasswordText`
+roles before the shared redaction boundary.
 
 Required checks:
 
@@ -20,9 +21,10 @@ Required checks:
 
 ## Windows
 
-Use the `uiautomation` crate on a dedicated COM-initialized thread. Call
-`GetFocusedElement`, use the element's cached properties, and walk its
-text-bearing descendants. Skip password controls at the UI Automation layer.
+The implemented reader uses the `uiautomation` crate from the capture thread;
+`UIAutomation::new` initializes COM before `GetFocusedElement`. It resolves
+the window ancestor, walks the control tree, reads only `TextPattern`, caps
+nodes/text, and skips any element whose `IsPassword` property is true.
 
 Required checks:
 
@@ -37,7 +39,7 @@ For each platform, focus three ordinary windows for at least 15 seconds each,
 then inspect the day file:
 
 1. It contains app and window metadata, not screenshots.
-2. Repeated text does not create an unbounded file.
+2. Repeated text during one Eyes session does not create an unbounded file.
 3. Secrets are replaced before disk I/O.
 4. Private browsing and password-manager windows produce no block.
 5. Stopping Eyes flushes the open block and stops within one poll interval.

@@ -22,9 +22,11 @@ tauri = { version = "2", features = ["tray-icon"] }
 # redaction, and segmentation code never needs to know which desktop it runs on.
 [target.'cfg(target_os = "linux")'.dependencies]
 atspi = "0.30"
+futures-lite = "2"
 
 [target.'cfg(target_os = "windows")'.dependencies]
 uiautomation = "0.25"
+windows = { version = "0.62.2", features = ["Win32_Foundation", "Win32_System_Threading"] }
 
 [dev-dependencies]
 tempfile = "3"
